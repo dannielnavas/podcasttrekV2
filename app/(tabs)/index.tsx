@@ -4,7 +4,8 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  TouchableWithoutFeedback,
+  Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -14,7 +15,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { Text } from "react-native";
 
 export default function HomeScreen() {
   const [themes, setThemes] = useState([
@@ -55,15 +55,15 @@ export default function HomeScreen() {
       <ThemedView style={(styles.stepContainer, styles.stepContainerCenter)}>
         <LinearGradient
           style={{ ...styles.fancyCard, ...styles.fancyCardLarge }}
-          colors={["#990000", "#ff0000"]} // Gradiente de rojo oscuro a rojo brillante
+          colors={["#f8e71c", "#7ed321", "#4a90e2"]} // Gradiente de rojo oscuro a rojo brillante
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
           <View style={styles.containerText}>
-            <ThemedText type="title" style={{ color: "#FFF" }}>
+            <ThemedText type="title" style={{ color: "#000" }}>
               Los mejores capitulos de lavadero sonico
             </ThemedText>
-            <ThemedText style={{ color: "#FFF" }}>
+            <ThemedText style={{ color: "#000" }}>
               Inicia sesión y guarda los capitulos
             </ThemedText>
           </View>
@@ -76,8 +76,8 @@ export default function HomeScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ flexDirection: "row", gap: 16, marginRight: 16 }}
         >
-          {themes.map((theme, index) => (
-            <TouchableWithoutFeedback key={theme.id} onPress={() => alert("clik")}>
+          {themes.map((theme) => (
+            <TouchableOpacity key={theme.id} onPress={() => alert("clik")}>
               <LinearGradient
                 style={{ ...styles.fancyCard, ...styles.fancyCardSmall }}
                 colors={["#1e3c72", "#2a5298"]} // Gradiente de azul claro a azul oscuro
@@ -118,8 +118,39 @@ export default function HomeScreen() {
                   </View>
                 </View>
               </LinearGradient>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           ))}
+        </ScrollView>
+      </ThemedView>
+      <ThemedView style={{ ...styles.stepContainer, marginRight: 16 }}>
+        <ThemedText type="subtitle">Recomendados</ThemedText>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ flexDirection: "row", gap: 16, marginRight: 16 }}
+        >
+          <LinearGradient
+            style={{ ...styles.fancyCard, ...styles.anotherCard, marginTop: 16 }}
+            colors={["#990000", "#ff0000"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <View style={styles.overlayLight} />
+            <ThemedText type="title" style={{ color: "#000" }}>
+              Live Long and Prospery
+            </ThemedText>
+          </LinearGradient>
+          <LinearGradient
+            style={{ ...styles.fancyCard, ...styles.anotherCard, marginTop: 16 }}
+            colors={["#f6d365", "#fda085", "#fbc687"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <View style={styles.overlayLight} />
+            <ThemedText type="title" style={{ color: "#000" }}>
+              Live Long and Prospery
+            </ThemedText>
+          </LinearGradient>
         </ScrollView>
       </ThemedView>
     </SafeAreaView>
@@ -178,6 +209,16 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject, // Ocupa todo el espacio de la tarjeta
     backgroundColor: "rgba(0, 0, 0, 0.1)", // Color de superposición con opacidad
     borderRadius: 8, // Opcional: agrega bordes redondeados a la superposición
+  },
+  overlayLight: {
+    ...StyleSheet.absoluteFillObject,
+    margin: 3,
+    backgroundColor: "rgba(256, 256, 256, 1)", // Color de superposición con opacidad
+    borderRadius: 6, // Opcional: agrega bordes redondeados a la superposición
+  },
+  anotherCard: {
+    height: 280,
+    width: 260,
   },
   fancyCardSmall: {
     width: 300,
