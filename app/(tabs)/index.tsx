@@ -20,9 +20,9 @@ export default function HomeScreen() {
   const [themes, setThemes] = useState([
     {
       id: 1,
-      name: "Podcast No.01 - Retorno al puente",
+      name: "Retorno al puente",
       description:
-        "RETORNO AL PUENTE, es una novela ambientada en el universo de Star Trek. Un improvisado podcast para hablar sobre el nuevo proyecto para el Blog de Star Trek Colombia.",
+        "RETORNO AL PUENTE, es una novela ambientada en el universo de Star Trek.",
       image: require("@/assets/images/season1epi1.jpg"),
     },
     {
@@ -45,14 +45,50 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.titleContainer}>
-        <ThemedText type="title">Good morning Trekkie</ThemedText>
-        <Link href={"/explorer"} asChild style={styles.button}>
+        <View
+          style={{
+            backgroundColor: "#000",
+            width: 180,
+            height: 32,
+            paddingLeft: 16,
+            paddingTop: 6,
+            paddingRight: 16,
+            paddingBottom: 6,
+            borderRadius: 20,
+            gap: 10,
+          }}
+        >
+          <Text
+            style={{ color: "#fff", fontWeight: 500, fontSize: 14, lineHeight: 19 }}
+          >
+            Good morning Trekkie
+          </Text>
+        </View>
+        <Link href={"/explorer"}>
           <Pressable>
             <Ionicons name="notifications-outline" size={24} color="black" />
           </Pressable>
         </Link>
       </View>
-      <ThemedView style={(styles.stepContainer, styles.stepContainerCenter)}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: 132,
+          borderRadius: 24,
+        }}
+      >
+        <LinearGradient
+          style={{ ...styles.fancyCard, ...styles.fancyCardLarge }}
+          colors={["#f8e71c", "#7ed321", "#4a90e2"]} // Gradiente de rojo oscuro a rojo brillante
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        ></LinearGradient>
+      </View>
+      {/* <ThemedView style={{ ...styles.stepContainer, ...styles.stepContainerCenter }}>
         <LinearGradient
           style={{ ...styles.fancyCard, ...styles.fancyCardLarge }}
           colors={["#f8e71c", "#7ed321", "#4a90e2"]} // Gradiente de rojo oscuro a rojo brillante
@@ -68,7 +104,7 @@ export default function HomeScreen() {
             </ThemedText>
           </View>
         </LinearGradient>
-      </ThemedView>
+      </ThemedView> */}
       <ThemedView style={{ ...styles.stepContainer, marginRight: 16 }}>
         <ThemedText type="subtitle">Nuevos episodios</ThemedText>
         <ScrollView
@@ -165,7 +201,9 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    marginLeft: 16,
+    marginRight: 16,
     gap: 8,
   },
   stepContainer: {
@@ -185,11 +223,7 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
-  button: {
-    padding: 10,
-    borderRadius: 100,
-    borderWidth: 1,
-  },
+
   containerText: {
     flexDirection: "column",
     width: 280,
@@ -204,6 +238,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     width: "90%",
     height: 250,
+    borderRadius: 24,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject, // Ocupa todo el espacio de la tarjeta
