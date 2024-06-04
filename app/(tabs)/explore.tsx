@@ -1,5 +1,7 @@
+import { getList } from "@/api/podcast";
 import { ThemedText } from "@/components/ThemedText";
-import { useState } from "react";
+import { IResponse } from "@/models/response.interface";
+import { useEffect, useState } from "react";
 import {
   FlatList,
   Image,
@@ -11,45 +13,15 @@ import {
 } from "react-native";
 
 export default function TabTwoScreen() {
-  const [themes, setThemes] = useState([
-    {
-      id: 1,
-      name: "Podcast No.01 - Retorno al puente",
-      description:
-        "RETORNO AL PUENTE, es una novela ambientada en el universo de Star Trek. Un improvisado podcast para hablar sobre el nuevo proyecto para el Blog de Star Trek Colombia.",
-      image: require("@/assets/images/season1epi1.jpg"),
-    },
-    {
-      id: 2,
-      name: "Star trek colombia 2",
-      image: require("@/assets/images/startrekcolombia.jpg"),
-    },
-    {
-      id: 3,
-      name: "Star trek colombia 3",
-      image: require("@/assets/images/startrekcolombia.jpg"),
-    },
-    {
-      id: 4,
-      name: "Star trek colombia 4",
-      image: require("@/assets/images/startrekcolombia.jpg"),
-    },
-    {
-      id: 5,
-      name: "Star trek colombia 4",
-      image: require("@/assets/images/startrekcolombia.jpg"),
-    },
-    {
-      id: 6,
-      name: "Star trek colombia 4",
-      image: require("@/assets/images/startrekcolombia.jpg"),
-    },
-    {
-      id: 7,
-      name: "Star trek colombia 4",
-      image: require("@/assets/images/startrekcolombia.jpg"),
-    },
-  ]);
+  const [themes, setThemes] = useState<IResponse | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      const response = await getList();
+      setThemes(response);
+    })();
+  }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -61,16 +33,16 @@ export default function TabTwoScreen() {
     >
       <ThemedText type="title">Todos los episodios</ThemedText>
       <FlatList
-        data={themes}
+        data={themes?.episodes}
         numColumns={1}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(pokemon) => String(pokemon.id)}
+        keyExtractor={(pokemon, index) => String(index)}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Image source={item.image} style={styles.image} />
+            <Image source={{ uri: item.thumbnail }} style={styles.image} />
             <View style={{ flexDirection: "column", gap: 8 }}>
-              <Text style={styles.title}>{item.name}</Text>
-              <Text>{item.description}</Text>
+              <Text style={styles.title}>{item.title}</Text>
+              {/* <Text>{item.title}</Text> */}
             </View>
           </View>
         )}
